@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Portfolio — Gabriela</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-desk:#0d0f14;
+    --bezel:#0a0b0e;
+    --screen:#14161c;
+    --surface:#1b1e27;
+    --surface-2:#22262f;
+    --text:#eceef2;
+    --text-dim:#8b92a3;
+    --violet:#7c5cff;
+    --mint:#35d0aa;
+    --coral:#ff6b81;
+    --amber:#ffb648;
+    --line:#2a2e39;
+    --radius-card:18px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    background:
+      radial-gradient(circle at 20% 10%, rgba(124,92,255,0.10), transparent 45%),
+      radial-gradient(circle at 80% 90%, rgba(53,208,170,0.08), transparent 45%),
+      var(--bg-desk);
+    font-family:'Inter', sans-serif;
+    color:var(--text);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:40px 16px;
+  }
+
+  /* ---- Phone frame (the signature element) ---- */
+  .phone{
+    position:relative;
+    width:380px;
+    height:780px;
+    background:var(--bezel);
+    border-radius:52px;
+    padding:14px;
+    box-shadow:
+      0 0 0 2px rgba(255,255,255,0.03),
+      0 40px 80px -20px rgba(0,0,0,0.7),
+      0 0 60px rgba(124,92,255,0.08);
+  }
+  .screen{
+    position:relative;
+    width:100%;
+    height:100%;
+    background:var(--screen);
+    border-radius:38px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .notch{
+    position:absolute;
+    top:0; left:50%; transform:translateX(-50%);
+    width:120px; height:24px;
+    background:var(--bezel);
+    border-radius:0 0 16px 16px;
+    z-index:20;
+  }
+  .statusbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 26px 4px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--text-dim);
+    flex-shrink:0;
+  }
+  .statusbar .icons{ display:flex; gap:5px; align-items:center; }
+  .statusbar svg{ width:16px; height:11px; }
+
+  /* ---- Screens (views) ---- */
+  .views{
+    position:relative;
+    flex:1;
+    overflow:hidden;
+  }
+  .view{
+    position:absolute;
+    inset:0;
+    padding:18px 22px 24px;
+    overflow-y:auto;
+    opacity:0;
+    transform:translateX(24px);
+    pointer-events:none;
+    transition:opacity .32s ease, transform .32s ease;
+  }
+  .view::-webkit-scrollbar{ display:none; }
+  .view.active{
+    opacity:1;
+    transform:translateX(0);
+    pointer-events:auto;
+  }
+
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--mint);
+    margin:0 0 8px;
+  }
+  h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:30px;
+    line-height:1.1;
+    margin:0 0 6px;
+    letter-spacing:-.01em;
+  }
+  h2{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:20px;
+    margin:0 0 14px;
+  }
+  p{
+    font-size:14px;
+    line-height:1.55;
+    color:var(--text-dim);
+    margin:0 0 14px;
+  }
+  .role{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:15px;
+    color:var(--violet);
+    font-weight:600;
+    margin:0 0 16px;
+  }
+
+  /* Avatar / hero visual */
+  .avatar{
+    width:64px; height:64px;
+    border-radius:18px;
+    background:linear-gradient(135deg, var(--violet), var(--mint));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:22px;
+    color:#0d0f14;
+    margin-bottom:18px;
+  }
+
+  .tag-row{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:20px; }
+  .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px;
+    padding:5px 9px;
+    border-radius:7px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    color:var(--text-dim);
+  }
+  .tag:nth-child(5n+1){ border-color:rgba(124,92,255,0.4); color:var(--violet); }
+  .tag:nth-child(5n+2){ border-color:rgba(53,208,170,0.4); color:var(--mint); }
+  .tag:nth-child(5n+3){ border-color:rgba(255,107,129,0.4); color:var(--coral); }
+  .tag:nth-child(5n+4){ border-color:rgba(255,182,72,0.4); color:var(--amber); }
+  .tag:nth-child(5n+5){ border-color:rgba(124,92,255,0.4); color:var(--violet); }
+
+  .cta{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--text);
+    color:var(--screen);
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600;
+    font-size:13px;
+    padding:11px 18px;
+    border-radius:12px;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+  }
+
+  /* Project cards */
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius-card);
+    padding:16px;
+    margin-bottom:14px;
+  }
+  .card .thumb{
+    width:100%;
+    height:110px;
+    border-radius:12px;
+    margin-bottom:12px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:rgba(255,255,255,0.75);
+  }
+  .thumb-1{ background:linear-gradient(135deg,#7c5cff,#3b2fc9); }
+  .thumb-2{ background:linear-gradient(135deg,#35d0aa,#1b8f74); }
+  .thumb-3{ background:linear-gradient(135deg,#ff8a5c,#c9503b); }
+  .card h3{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:15px;
+    margin:0 0 6px;
+  }
+  .card p{ font-size:12.5px; margin:0 0 10px; }
+  .stack{ display:flex; flex-wrap:wrap; gap:6px; }
+  .stack span{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    color:var(--text-dim);
+    background:var(--surface-2);
+    padding:3px 7px;
+    border-radius:6px;
+  }
+
+  /* Skills */
+  .skill-group{ margin-bottom:18px; }
+  .skill-group .label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--text-dim);
+    margin-bottom:8px;
+    display:block;
+  }
+  .bar-row{ display:flex; align-items:center; gap:10px; margin-bottom:9px; }
+  .bar-row .name{ width:96px; font-size:12px; flex-shrink:0; }
+  .bar-track{
+    flex:1; height:6px; background:var(--surface-2);
+    border-radius:4px; overflow:hidden;
+  }
+  .bar-fill{ height:100%; border-radius:4px; background:linear-gradient(90deg, var(--violet), var(--mint)); }
+
+  /* Contact */
+  .contact-item{
+    display:flex; align-items:center; gap:12px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:13px 14px;
+    margin-bottom:10px;
+    text-decoration:none;
+    color:var(--text);
+  }
+  .contact-item .ico{
+    width:34px; height:34px; border-radius:9px;
+    background:var(--surface-2);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .contact-item .label{ font-size:12px; color:var(--text-dim); margin:0; }
+  .contact-item .value{ font-family:'Space Grotesk', sans-serif; font-size:13.5px; font-weight:600; }
+
+  /* Bottom tab bar */
+  .tabbar{
+    flex-shrink:0;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    padding:10px 10px 6px;
+    background:rgba(20,22,28,0.85);
+    backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+  }
+  .tab{
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+    background:none; border:none; cursor:pointer;
+    color:var(--text-dim);
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px;
+    padding:4px 10px;
+    transition:color .2s ease;
+  }
+  .tab svg{ width:20px; height:20px; stroke:var(--text-dim); transition:stroke .2s ease; }
+  .tab.active{ color:var(--text); }
+  .tab.active svg{ stroke:var(--violet); }
+  .tab[data-view="proyectos"].active svg{ stroke:var(--mint); }
+  .tab[data-view="skills"].active svg{ stroke:var(--amber); }
+  .tab[data-view="contacto"].active svg{ stroke:var(--coral); }
+  .home-indicator{
+    width:120px; height:4px;
+    background:var(--text-dim);
+    opacity:.4;
+    border-radius:3px;
+    margin:6px auto 4px;
+  }
+
+  .hint{
+    text-align:center;
+    color:var(--text-dim);
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    margin-top:22px;
+    max-width:380px;
+  }
+
+  @media (max-width:420px){
+    .phone{ width:100%; max-width:380px; height:88vh; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .view{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<div>
+  <div class="phone">
+    <div class="screen">
+      <div class="notch"></div>
+      <div class="statusbar">
+        <span>9:41</span>
+        <div class="icons">
+          <svg viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="6" width="3" height="5" rx="0.5" fill="#8b92a3"/><rect x="4.5" y="4" width="3" height="7" rx="0.5" fill="#8b92a3"/><rect x="9" y="1.5" width="3" height="9.5" rx="0.5" fill="#8b92a3"/><rect x="13.5" y="0" width="2.5" height="11" rx="0.5" fill="#eceef2"/></svg>
+        </div>
+      </div>
+
+      <div class="views">
+
+        <!-- INICIO -->
+        <section class="view active" id="view-inicio">
+          <p class="eyebrow">Portfolio</p>
+          <div class="avatar">G</div>
+          <h1>Gabriela [Tu Apellido]</h1>
+          <p class="role">Tecnicatura Universitaria en Diseño y Desarrollo de Aplicaciones Multiplataforma</p>
+          <p>Diseño y construyo apps para Android e iOS, desde el wireframe hasta el código en producción. Me interesa el detalle de interacción tanto como la arquitectura por debajo.</p>
+          <div class="tag-row">
+            <span class="tag">Kotlin</span>
+            <span class="tag">Swift</span>
+            <span class="tag">Flutter</span>
+            <span class="tag">Figma</span>
+            <span class="tag">Firebase</span>
+          </div>
+          <div style="display:flex; gap:10px; margin-bottom:24px;">
+            <a href="#" class="cta" onclick="goTo('proyectos'); return false;">Ver proyectos →</a>
+            <a href="mailto:gabrielabernini1974@gmail.com" class="cta" style="background:var(--surface); color:var(--text); border:1px solid var(--line);">Escribirme</a>
+          </div>
+
+          <div class="card">
+            <h3 style="margin-bottom:8px;">Formación</h3>
+            <p style="margin-bottom:0;">Tecnicatura Universitaria en Diseño y Desarrollo de Aplicaciones Multiplataforma — Universidad de Junín.</p>
+          </div>
+
+          <div class="card">
+            <h3 style="margin-bottom:8px;">Mi visión</h3>
+            <p style="margin-bottom:0;">Me formé con el objetivo de convertir ideas en soluciones digitales concretas, con foco en el desarrollo multiplataforma. A lo largo de la Tecnicatura desarrollé una mirada integral sobre el proceso de creación de una aplicación, desde el diseño de la experiencia de usuario hasta su implementación técnica, entendiendo que ambas etapas son igual de importantes para lograr un producto sólido.</p>
+            <p style="margin-bottom:0;">Mi objetivo es seguir creciendo en entornos donde el aprendizaje continuo forme parte del trabajo diario, aportando tanto en la construcción de interfaces claras y funcionales como en la resolución de los desafíos técnicos que hay detrás. Busco desarrollar aplicaciones que no solo funcionen correctamente, sino que resulten simples y agradables de usar para quien está del otro lado de la pantalla.</p>
+          </div>
+        </section>
+
+        <!-- PROYECTOS -->
+        <section class="view" id="view-proyectos">
+          <p class="eyebrow">Trabajo reciente</p>
+          <h2>Proyectos</h2>
+
+          <div class="card">
+            <div class="thumb thumb-1">estudio jurídico</div>
+            <h3>Estudio Jurídico — Sitio web</h3>
+            <p>Sitio institucional para un estudio jurídico, con reserva de turnos integrada.</p>
+            <div class="stack"><span>Vite</span><span>JavaScript</span></div>
+            <a href="https://estudio-juridico-tawny-six.vercel.app/" target="_blank" class="cta" style="margin-top:10px; font-size:12px; padding:8px 14px;">Ver sitio en vivo →</a>
+          </div>
+
+          <div class="card">
+            <div class="thumb thumb-1">app mockup</div>
+            <h3>RutaFácil — App de transporte urbano</h3>
+            <p>Diseño UX/UI y desarrollo del front en Flutter para una app de seguimiento de colectivos en tiempo real.</p>
+            <div class="stack"><span>Flutter</span><span>Dart</span><span>Google Maps API</span></div>
+          </div>
+
+          <div class="card">
+            <div class="thumb thumb-2">app mockup</div>
+            <h3>Hábito+ — Tracker de hábitos</h3>
+            <p>App nativa Android con recordatorios locales, estadísticas de progreso y modo offline.</p>
+            <div class="stack"><span>Kotlin</span><span>Room</span><span>Jetpack Compose</span></div>
+          </div>
+
+          <div class="card">
+            <div class="thumb thumb-3">app mockup</div>
+            <h3>Vecinos — Red barrial</h3>
+            <p>Prototipo de alta fidelidad en Figma y desarrollo del MVP para conectar vecinos de un mismo barrio.</p>
+            <div class="stack"><span>Figma</span><span>Swift</span><span>Firebase</span></div>
+          </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section class="view" id="view-skills">
+          <p class="eyebrow">Caja de herramientas</p>
+          <h2>Skills</h2>
+
+          <div class="skill-group">
+            <span class="label">Desarrollo</span>
+            <div class="bar-row"><span class="name">Kotlin</span><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div></div>
+            <div class="bar-row"><span class="name">Flutter</span><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div></div>
+            <div class="bar-row"><span class="name">Swift</span><div class="bar-track"><div class="bar-fill" style="width:65%"></div></div></div>
+            <div class="bar-row"><span class="name">Firebase</span><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div></div>
+          </div>
+
+          <div class="skill-group">
+            <span class="label">Diseño</span>
+            <div class="bar-row"><span class="name">Figma</span><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div></div>
+            <div class="bar-row"><span class="name">UX Research</span><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div></div>
+            <div class="bar-row"><span class="name">Prototipado</span><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div></div>
+          </div>
+
+          <div class="skill-group">
+            <span class="label">Idiomas</span>
+            <div class="bar-row"><span class="name">Inglés</span><div class="bar-track"><div class="bar-fill" style="width:55%"></div></div></div>
+          </div>
+        </section>
+
+        <!-- CONTACTO -->
+        <section class="view" id="view-contacto">
+          <p class="eyebrow">Hablemos</p>
+          <h2>Contacto</h2>
+          <p>Disponible para pasantías, freelance o proyectos en equipo.</p>
+
+          <a class="contact-item" href="mailto:gabrielabernini1974@gmail.com">
+            <div class="ico">✉️</div>
+            <div><p class="label">Email</p><p class="value">gabrielabernini1974@gmail.com</p></div>
+          </a>
+          <a class="contact-item" href="https://linkedin.com/in/tu-usuario" target="_blank">
+            <div class="ico">in</div>
+            <div><p class="label">LinkedIn</p><p class="value">/in/tu-usuario</p></div>
+          </a>
+          <a class="contact-item" href="https://github.com/tu-usuario" target="_blank">
+            <div class="ico">⌥</div>
+            <div><p class="label">GitHub</p><p class="value">github.com/tu-usuario</p></div>
+          </a>
+        </section>
+
+      </div>
+
+      <div class="tabbar">
+        <button class="tab active" data-view="inicio" onclick="goTo('inicio')">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+          Inicio
+        </button>
+        <button class="tab" data-view="proyectos" onclick="goTo('proyectos')">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg>
+          Proyectos
+        </button>
+        <button class="tab" data-view="skills" onclick="goTo('skills')">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3.5L6 20l1.5-6.5L3 9l6-1z"/></svg>
+          Skills
+        </button>
+        <button class="tab" data-view="contacto" onclick="goTo('contacto')">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4z"/></svg>
+          Contacto
+        </button>
+      </div>
+      <div class="home-indicator"></div>
+    </div>
+  </div>
+  <p class="hint">Tocá los íconos de abajo para navegar, como en una app real.</p>
+</div>
+
+<script>
+  function goTo(name){
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('view-' + name).classList.add('active');
+    document.querySelector('.tab[data-view="' + name + '"]').classList.add('active');
+  }
+</script>
+
+</body>
+</html>
