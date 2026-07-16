@@ -304,8 +304,19 @@
     max-width:380px;
   }
 
-  @media (max-width:420px){
-    .phone{ width:100%; max-width:380px; height:88vh; }
+  @media (max-width:480px){
+    body{ padding:0; align-items:stretch; }
+    .phone{
+      width:100%;
+      height:100vh;
+      height:100dvh;
+      border-radius:0;
+      padding:0;
+      box-shadow:none;
+    }
+    .screen{ border-radius:0; }
+    .notch{ display:none; }
+    .hint{ display:none; }
   }
   @media (prefers-reduced-motion: reduce){
     .view{ transition:none; }
@@ -331,7 +342,7 @@
         <section class="view active" id="view-inicio">
           <p class="eyebrow">Portfolio</p>
           <div class="avatar">G</div>
-          <h1>Gabriela [Tu Apellido]</h1>
+          <h1>Gabriela</h1>
           <p class="role">Tecnicatura Universitaria en Diseño y Desarrollo de Aplicaciones Multiplataforma</p>
           <p>Diseño y construyo apps para Android e iOS, desde el wireframe hasta el código en producción. Me interesa el detalle de interacción tanto como la arquitectura por debajo.</p>
           <div class="tag-row">
@@ -385,12 +396,7 @@
             <div class="stack"><span>Kotlin</span><span>Room</span><span>Jetpack Compose</span></div>
           </div>
 
-          <div class="card">
-            <div class="thumb thumb-3">app mockup</div>
-            <h3>Vecinos — Red barrial</h3>
-            <p>Prototipo de alta fidelidad en Figma y desarrollo del MVP para conectar vecinos de un mismo barrio.</p>
-            <div class="stack"><span>Figma</span><span>Swift</span><span>Firebase</span></div>
-          </div>
+          <!-- Próximo proyecto: agregar acá cuando esté listo -->
         </section>
 
         <!-- SKILLS -->
